@@ -1,0 +1,18 @@
+5 2 3
+ooxoo
+
+1
+5
+
+
+11 3 2
+ooxxxoxxxoo
+
+6
+
+
+16 4 3
+ooxxoxoxxxoxoxxo
+
+11
+16
