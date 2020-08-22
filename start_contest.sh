@@ -1,0 +1,17 @@
+#!/bin/bash
+
+contest_name=$1
+if [ $2 ]; then
+  problems=$2
+else
+  problems="a,b,c,d,e,f"
+fi
+contest_dir=problems/${contest_name}
+
+if [ ! -e ${contest_dir} ]; then
+  mkdir ${contest_dir}
+  for problem in ${problems//,/ }; do
+    touch ${contest_dir}/${contest_name}_${problem}.py
+  done
+  touch ${contest_dir}/${contest_name}_review.md
+fi
