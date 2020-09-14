@@ -14,4 +14,7 @@ if [ ! -e ${contest_dir} ]; then
     touch ${contest_dir}/${contest_name}_${problem}.py
   done
   touch ${contest_dir}/${contest_name}_review.md
+  echo "# ${contest_name}" >> ${contest_dir}/${contest_name}_review.md
+  echo "" >> ${contest_dir}/${contest_name}_review.md
+  echo "https://atcoder.jp/contests/${contest_name}/submissions/me" >> ${contest_dir}/${contest_name}_review.md
 fi
