@@ -2,9 +2,158 @@
 
 https://atcoder.jp/contests/abc080/submissions/me
 
+# abc125
+
+https://atcoder.jp/contests/abc125/submissions/me
+
+## C
+
+- iまで見て0個とり除いたgcd, 1ことり除いてとりうるgcdを持っておき、dpチックにやった。1ことり除いてとりうるgcdが場合によってはN個になるのでダメかなと思ったけど通った
+- 結合則が成り立つ演算について、ある要素を除いた値を繰り返し求めるさいの高速化手法
+  - 逆元が存在するならば、全体に対する値と逆元を用いてO(n)
+  - 演算を+と表記する。左から累積和(と言っていいのか？)Lと右からの累積和Rを持っておく、L[i-1]+R[i+1]とかが求めるものO(n)で行けた
+
+## D
+
+- 単純なdpでもよかった
+
+# abc126
+
+https://atcoder.jp/contests/abc126/submissions/me
+
+# abc127
+
+https://atcoder.jp/contests/abc127/submissions/me
+
+## E
+
+- sumの取り替え
+- 数式変換きれいに描く
+- modのcomb修正
+- デバッグ地獄
+- 0-index, 1-index最初に確認
+
+## 
+
+# abc128
+
+https://atcoder.jp/contests/abc128/submissions/me
+
+## C
+
+- popcount周り、しっかりしておく
+
+## E
+
+- heappopはちゃんとlognです
+- 添字に注意、似たやつ使わない
+- イベントソート
+  - 時系列順に見ていき、挿入、削除のイベントの列を持つ。それぞれに対して何らかの保持する値を持っておく
+- python におけるstd::set
+  - 値の範囲が保持できる(10^7くらい？)
+    - BITで値域の配列について保持、xの追加BIT[x] += 1,削除: BIT[x] -= 1
+  - 要素数が保持できる
+    - heapq+削除済の配列、追加: heapq.heappush, 削除: removed[i] = True, 取り出し: heapqの最小からremovedならpopして止まったら取り出し
+
+# abc129
+
+https://atcoder.jp/contests/abc129/submissions/me
+
+## C
+
+- Cでdpなんてあったっけ？
+- フィボナッチと同じか、無駄な状態は保持しない
+
+## D
+
+- にぶたん便利ー
+
+## E
+
+- xor好き
+
+## F
+
+- 状態を持っておいて、変換が線形でかける=>行列でかける。変換をn回やる場合、繰り返し二乗法でlognでできる
+- 計算量からn回操作できないとしても、操作による状態の変換式をかく
+- numpyではオーバーフローに注意する
+
+# abc130
+
+https://atcoder.jp/contests/abc130/submissions/me
+
+## D
+
+- 累積和
+
+## E
+
+- dp
+- setのすごさ
+
+## F
+
+- めんどいf
+
+# abc131
+
+https://atcoder.jp/contests/abc131/submissions/me
+
+## E
+
+- グラフの構成
+- 絵をかいて考える
+
+## F
+
+- 何が起こるのかよく考察する
+- グラフで考える
+
+# abc132
+
+https://atcoder.jp/contests/abc132/submissions/me
+
+# abc133
+
+https://atcoder.jp/contests/abc133/submissions/me
+
+## E
+
+- 部分問題に落ち着ける
+
+## F
+
+- オイラーツアー
+- LCA
+
+# abc134
+
+https://atcoder.jp/contests/abc134/submissions/me
+
+## E
+
+- ガバ照明の貪欲方
+  - 多分いけるってなったらやってしまっていいかも
+
+## F
+
+- 順列、二つの1..Nのリストのマッチングを作るという捉え方
+- dp 保持すべき情報をきちんと考える
+
 # abc135
 
 https://atcoder.jp/contests/abc135/submissions/me
+
+## D
+
+- 問題文はちゃんと読みましょう(mod1e9+7を出力)
+- dpはテーブル一つでヤンなくていい。メモリにはいいけど実装ややこしくなりがち
+
+## E
+
+- 実装前に!!!!
+  - できるだけ一般化して場合わけ減らす
+  - もっと簡単な構築ほうがないか考える
 
 # abc136
 
@@ -12,8 +161,9 @@ https://atcoder.jp/contests/abc136/submissions/me
 
 ## D
 
-- bisect_right(=bisect)(iter, x): (iter[i]< x)を満たす最小のiを返す
-- bisect_left: (iter[i]<= x)を満たす最小のiを返す
+- bisect_right(=bisect)(iter, x): (iter[i]>x)を満たす最小のiを返す
+- bisect_left: (iter[i]>= x)を満たす最小のiを返す
+
 
 ## E
 
@@ -160,11 +310,20 @@ https://atcoder.jp/contests/abc144/submissions/me
 
 ## F
 
-- 問題ちゃんと見る
+- 期待値求める部分=単純なdp(後ろから)
+- ちょっとの高速化(塞ぐのーどを決めたらどのエッジがいいかは一意)
 
 # abc145
 
 https://atcoder.jp/contests/abc145/submissions/me
+
+## E
+
+- メモリアクセスの問題？(N, M, L)とかの形の配列を持つときは小さい方を先にする？
+
+## F
+
+- 座標圧縮的なものが必要なdp
 
 # abc146
 
@@ -347,9 +506,62 @@ https://atcoder.jp/contests/abc150/submissions/me
 - modの時の割り算を逆元を求めることであまりだけ保持すれば良いようにできる。
     - フェルマーの小定理を用いて、YのmodPの逆元は、$Y^{(P-2)}$
 
+# abc160
+
+https://atcoder.jp/contests/abc160/submissions/me
+
+# abc135
+
+https://atcoder.jp/contests/abc163/submissions/me
+
+## D
+
+- 簡単な実装は速くやる
+- 微妙なインデックスで迷わない
+
+## E
+
+- 最適な条件から考察を進めるパターン
+- 解において順列が必要なく、2グループに分ける=>全探索でなくdpでできる
+- dpは更新式ちゃんとかくか、表を書いておく
+
+## F
+
+- 木dp 勉強する
+- Euler tour?なる言葉
+
+# abc164
+
+https://atcoder.jp/contests/abc164/submissions/me
+
+## D
+
+- 累積和から差分で値を出すやつのmodパターン
+
+## E
+
+- 頂点*状態のグラフを作って問題をとくパターン
+
+## F
+
+- 場合わけが面倒ならば実装しながら考えて地獄になるんではなく先にしっかり考える
+
 # abc166
 
 https://atcoder.jp/contests/abc166/submissions/me
+
+## D
+
+- 値を真面目に評価すると探索範囲狭いパターン
+
+## E
+
+- 式変換したらペアの条件がいい感じになるパターン
+
+## F
+
+- 解法を真面目に構築する
+- どうすれば解ける？から一個戻る感じ
 
 # abc177
 
@@ -400,3 +612,118 @@ https://atcoder.jp/contests/abc178/submissions/me
   - 区間が左からの順にかぶ利なく存在しているとすると条件は各iについて(C[i]-D[i-1] <= x <= C[i-1]+N-D[i])
   - でもコンテスト中に自分は証明できなそうだなあ
 
+# abc179
+
+https://atcoder.jp/contests/abc179/submissions/me
+
+## D
+
+- セグメント木
+- 迷走した、よく考えればdpの更新をするのに区間のクエリでいいと書いてあるっていうのに
+- 制約をよくみる、Kが10なのでこれに注目する
+
+## E
+
+- 実装入るまで長かったけども、十分先に考え、実装中は割と脳死でできた
+- loopがあってという問題、アプローチを決めておく
+  - まず一周してloopの始まりの値(loop_start)を求める(訪れた値に1を立てる)
+  - start からloop_start までの値を集計=>(before_loop_sum, before_loop_len)
+  - loop_startから初めてloop_startをもう一度訪れるまでの値を集計=>(loop_sum, loop_len)
+  - Nがbefore_loop_len以下=>for文で回して終わり
+  - Nがbefore_loop_len以上=>N-=before_loop_len, ans += before_loop_sum
+  - ans += loop_sum*(N//loop_len), N %= loop_len
+  - あまりをforぶん回して終わり
+
+## F
+
+- segtree
+- 思ったより簡単なF
+
+# abl
+
+https://atcoder.jp/contests/abl/submissions/me
+
+## e
+
+- 遅延seg?
+
+## f
+
+- fft?
+
+# acl1
+
+https://atcoder.jp/contests/acl1/submissions/me
+
+## B
+
+- 中国剰余定理
+
+# arc099
+
+https://atcoder.jp/contests/arc099/submissions/me
+
+## B
+
+- 式変換
+  - 差分を変数にする
+- 必要条件から絞っていく
+
+## C
+
+- 都合、性質のいいグラフになるよう考える
+  - 接続=>非接続のグラフ
+- 二部グラフを構成できるか、できるならば要素数についてなるべく近郊を取る
+  - 連結成分毎に二部グラフを作る=>連結成分毎に配属を決める=>最小が正解
+  - 配属決めるの全探索で通ってしまったけど最悪2^350くらいなのでdpでやるべきだった(高々700^2)
+
+# arc100
+
+https://atcoder.jp/contests/arc100/submissions/me
+
+# arc101
+
+https://atcoder.jp/contests/arc101/submissions/me
+
+# arc102
+
+https://atcoder.jp/contests/arc102/submissions/me
+
+# arc103
+
+https://atcoder.jp/contests/arc103/submissions/me
+
+## B(D)
+
+- 座標変換
+- 可能なら独立な問題として扱う
+
+# arc104
+
+https://atcoder.jp/contests/arc104/submissions/me
+
+## B
+
+- 累積和
+
+## C
+
+- 区間分け、簡単な問題に分割する!!
+- 簡単な問題に分割する！！
+- 絵をたくさん書く、ヒントになりそうな部分が浮かぶはず！
+- 迷走の様子
+  - 結局, A_i, B_i = (-1, -1) で詰まる
+  - 謎の長能力でなんとかしようと奮闘する
+
+## D
+
+- 平均がnの数列、n以下のdiff=n以上のdiff
+- dpの高速化、[:i]とかを足すときは保持しながらやる。今回は[:i:j]なのでj毎に飛ばしながら更新
+
+## E
+
+- 解説が何言ってんのかわからん、記号ちゃんと説明しろ
+
+# chokudai005
+
+https://atcoder.jp/contests/chokudai005/submissions/me

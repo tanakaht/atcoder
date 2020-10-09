@@ -1,13 +1,12 @@
-S = input()
-modps = sorted([0]+[int(S[-i:])%2019 for i in range(1, len(S)+1)])
+from collections import Counter
+
+S = list(map(int, input()))[::-1]
+P = 2019
+S_i = [0]*(len(S)+1)
+for i, s in enumerate(S):
+    S_i[i + 1] = (S_i[i] + pow(10, i, P) * s) % P
+c = Counter(S_i)
 ans = 0
-pre = -1
-pre_cnt = 0
-for modp in modps:
-    if modp != pre:
-        pre = modp
-        pre_cnt = 1
-    else:
-        ans += pre_cnt
-        pre_cnt += 1
+for k, cnt in c.items():
+    ans += cnt * (cnt - 1) // 2
 print(ans)

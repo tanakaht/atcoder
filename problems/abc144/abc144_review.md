@@ -9,4 +9,5 @@ https://atcoder.jp/contests/abc144/submissions/me
 
 ## F
 
-- 問題ちゃんと見る
+- 期待値求める部分=単純なdp(後ろから)
+- ちょっとの高速化(塞ぐのーどを決めたらどのエッジがいいかは一意)

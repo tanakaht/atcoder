@@ -4,8 +4,9 @@ https://atcoder.jp/contests/abc136/submissions/me
 
 ## D
 
-- bisect_right(=bisect)(iter, x): (iter[i]< x)を満たす最小のiを返す
-- bisect_left: (iter[i]<= x)を満たす最小のiを返す
+- bisect_right(=bisect)(iter, x): (iter[i]>x)を満たす最小のiを返す
+- bisect_left: (iter[i]>= x)を満たす最小のiを返す
+
 
 ## E
 

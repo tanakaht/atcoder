@@ -3,7 +3,7 @@ from collections import defaultdict
 
 N = int(input())
 A = list(map(int, input().split()))
-p = [-1] * (max(A)+1)
+p = [-1] * (max(A)+2)
 count = defaultdict(lambda: 0)
 
 p[0] = 0
@@ -22,7 +22,7 @@ for a in A:
     for factor in factors:
         count[factor] += 1
 
-max_count = max(count.values())
+max_count = 1 if len(count.values())==0 else max(count.values())
 if max_count == 1:
     print('pairwise coprime')
 elif max_count < N:
