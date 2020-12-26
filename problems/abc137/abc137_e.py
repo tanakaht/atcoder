@@ -1,31 +1,30 @@
 import sys
 import math
-import deque
 
 input = sys.stdin.readline
 N, M, P = map(int, input().split())
-ABC = [list(map(int, input().split())) for _ in range(N)]
-g = [[] for _ in range(M)]
-for a, b, c in ABC:
-    g[a - 1].append((b - 1, c - P))
+edges = []
+for _ in range(M):
+    a, b, c = map(int, input().split())
+    a -= 1
+    b -= 1
+    edges.append((a, b, -(c - P)))
 
-# find pos loop
-q = deque([(0, 0)])
-scores = [-math.inf] * N
-scores[0] = 0
-fin = [0] * N
+d = [math.inf]*N
+d[0] = 0
+for _ in range(N+1):
+    for a, b, c in edges:
+        if d[a]+c < d[b]:
+            d[b] = d[a]+c
+ans = -d[N-1]
 
-
-def find_loop(v):
-    if scores[v] != -math.inf and fin[v] != 0:
-        fa
-    scores[v] =
-    for v_, c_ in g[v]:
-        scores[v_] =
-
-
-q = deque([(0, 0)])
-scores = [-math.inf] * N
-scores[0] = 0
-while len(q) > 0:
-    node, v = q.pop()
+# 負閉路を一周してゴールにつくために2N買い回せば十分(ループでN, ゴールでNとか)
+for _ in range(2*N+1):
+    for a, b, c in edges:
+        if d[a]+c < d[b]:
+            d[b] = -math.inf
+# 結果が変わっていればゴールにつける負閉路がある
+if ans!=-d[N-1]:
+    print(-1)
+    sys.exit()
+print(max(0, -d[N-1]))
