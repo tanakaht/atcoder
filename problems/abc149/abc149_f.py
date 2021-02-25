@@ -1,62 +1,58 @@
-# maspy
-
 import sys
-read = sys.stdin.buffer.read
-readline = sys.stdin.buffer.readline
-readlines = sys.stdin.buffer.readlines
 
-N = int(readline())
-m = map(int, read().split())
-AB = zip(m, m)
+sys.setrecursionlimit(int(1e7))
+N = int(input())
+AB = [list(map(int, input().split())) for _ in range(N-1)]
+P = int(1e9+7)
+pow2 = [1]
+pow2_inv = [1]
+tmp = 1
+for i in range(1, N+2):
+    tmp = (tmp*2) % P
+    pow2.append(tmp)
+    pow2_inv.append(pow(tmp, P - 2, P))
 
-MOD = 10 ** 9 + 7
-
-graph = [[] for _ in range(N+1)]
+g=[[] for _ in range(N)]
 for a, b in AB:
-    graph[a].append(b)
-    graph[b].append(a)
+    g[a-1].append(b-1)
+    g[b - 1].append(a - 1)
 
-root = 1
-parent = [0] * (N+1)
-order = []
-stack = [root]
-while stack:
-    x = stack.pop()
-    order.append(x)
-    for y in graph[x]:
-        if y == parent[x]:
-            continue
-        parent[y] = x
-        stack.append(y)
+children = [[] for _ in range(N)]
+q = [(0, None)]
+while len(q) > 0:
+    u, p = q.pop()
+    for v in g[u]:
+        if v != p:
+            q.append((v, u))
+            children[u].append(v)
 
-# (1/2)^n
-x = (MOD + 1) // 2
-power = [1] * (N+100)
-power_inv = [1] * (N+100)
-for i in range(1, N+100):
-    power[i] = power[i-1] * 2 % MOD
-    power_inv[i] = power_inv[i-1] * x % MOD
+n_children_ = [None]*N
+def n_children(u):
+    if n_children_[u] is not None:
+        return n_children_[u]
+    ret = 1
+    for v in children[u]:
+        ret += n_children(v)
+    n_children_[u] = ret
+    return ret
 
-# 部分木の大きさ
-answer = 0
-size = [1] * (N+1)
-for v in order[::-1]:
-    p = parent[v]
-    size[p] += size[v]
-    A = [size[w] for w in graph[v] if w != p]  # 部分木のサイズ集合
-    if v != root:
-        A.append(N - 1 - sum(A))
-    if len(A) == 1:
-        continue
-    prod = 1
-    coef = 1
-    for x in A:
-        prod *= power_inv[x]
-        prod %= MOD
-        coef += (power[x] - 1)
-    E = 1 - prod * coef % MOD
-    answer += E
+dfs_ord = []
+q = [0]
+while q:
+    u = q.pop()
+    dfs_ord.append(u)
+    for v in children[u]:
+        q.append(v)
+for u in dfs_ord[::-1]:
+    n_children(u)
 
-answer *= power_inv[1]
-answer %= MOD
-print(answer)
+ans = 0
+for u in range(N):
+    n_childs = [n_children(v) for v in children[u]]
+    if sum(n_childs) != N-1:
+        n_childs.append(N-sum(n_childs)-1)
+    ans = (ans+pow2[N-1])%P
+    for n_child in n_childs:
+        ans = (ans-(pow2[n_child]-1))%P
+    ans = (ans-1)%P
+print((ans*pow2_inv[N])%P)
