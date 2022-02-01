@@ -19,7 +19,7 @@ Mako==1.1.4
 MarkupSafe==1.1.1
 networkx==2.5
 numba==0.51.2
-numpy==1.20.1
+numpy==1.21.0
 online-judge-api-client==10.8.0
 online-judge-template-generator==4.7.2
 online-judge-tools==11.1.3
