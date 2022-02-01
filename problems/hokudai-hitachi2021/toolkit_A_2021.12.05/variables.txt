@@ -1,0 +1,178 @@
+__name__: __main__
+__doc__: None
+__package__: None
+__loader__: <_frozen_importlib_external.So
+__spec__: None
+__annotations__: {}
+__builtins__: <module 'builtins' (built-in)>
+__file__: /Users/ht/googledrive/projects
+__cached__: None
+sys: <module 'sys' (built-in)>
+math: <module 'math' from '/usr/loca
+LogRecord: <class 'logging.LogRecord'>
+getLogger: <function getLogger at 0x10963
+StreamHandler: <class 'logging.StreamHandler'
+FileHandler: <class 'logging.FileHandler'>
+DEBUG: 10
+time: <built-in function time>
+ts_start: 1637659334.219122
+logger: <Logger __main__ (DEBUG)>
+handler: <FileHandler /Users/ht/googled
+budget: 47058
+T_max: 7500
+T_last: 6750
+N_div: 15
+N_day: 4
+N_acc: 7
+a_cost: 1700
+w_day: [600.0, 360.0, 480.0, 300.0]
+w_trans: 1.0
+w_ele: 1.0
+w_env: 1.0
+w_acc: 1.0
+a_trans_fee: 18.4
+a_trans_penalty: 0.017377
+a_ele: 0.004407
+a_ele_FE: 0.003553
+a_ele_buy: 0.006763
+a_env_fuel: 0.000375
+a_env_buy: 0.00075
+a_acc: 7000000
+V: 6401
+E: 9780
+vertexs: [[3589, 322, 11, 1559, 10], [-
+edges: [[1, 157, 54], [2, 4020, 4], [
+N_demand: 2
+demands: [[(2251, 10, [2, 2, 2, 4, 1, 3
+i: 2
+d: 3
+x: 754
+sigma: 10
+D: [7, 7, 7, 8, 10, 9, 13, 14, 11
+radiations: [[[0.0, 0.0, 0.0, 0.0, 0.37372
+R: [0.0, 0.0, 0.0, 0.0, 1.345451,
+N_PV: 3
+N_FE: 4
+N_RB: 3
+N_EVC: 5
+N_V: 3
+PVs: [(10, 97), (12, 81), (15, 73)]
+A_PV: 15
+C_PV_init: 73
+FEs: [(15, 131), (164, 1784), (420,
+P_FE_max: 0
+C_FE_init: 0
+RBs: [(22470, 294), (52176, 582), (
+Cap_RB: 66411
+C_RB_init: 882
+EVCs: [(40, 40, 436), (80, 80, 1196)
+P_EVC_in: 0
+P_EVC_out: 0
+C_EVC_init: 0
+Vehicles: [(223869, 4, 362, 362, 2598, 3
+Cap_V_ele: 617713
+Cap_V_pop: 40
+P_V_charge: 980
+P_V_discharge: 980
+C_V_init: 6147
+delta_V_move: 216
+orders: [[3, 18, 18, 30, 30, 30, 18, 1
+N_shelter: 12
+shelter_info: [[1167, 250], [450, 610], [363
+D_shelter: [3, 3, 4, 4, 5, 5, 5, 5, 5, 5,
+Grid: <class '__main__.Grid'>
+grids: [<__main__.Grid object at 0x10
+EV_type: <class '__main__.EV_type'>
+ev_types: [<__main__.EV_type object at 0
+print_infos: <function print_infos at 0x109
+test: <function test at 0x10aa95040>
+submit: <function submit at 0x10aa950d
+__name__: __main__
+__doc__: None
+__package__: None
+__loader__: <_frozen_importlib_external.SourceFileLoader object at 0x10b740ca0>
+__spec__: None
+__annotations__: {}
+__builtins__: <module 'builtins' (built-in)>
+__file__: /Users/ht/googledrive/projects/atcoder/problems/hokudai-hitachi2021/toolkit_A_20211118/./solve.py
+__cached__: None
+sys: <module 'sys' (built-in)>
+math: <module 'math' from '/usr/local/Cellar/python@3.9/3.9.7/Frameworks/Python.framework/Versions/3.9/lib
+LogRecord: <class 'logging.LogRecord'>
+getLogger: <function getLogger at 0x10ba35550>
+StreamHandler: <class 'logging.StreamHandler'>
+FileHandler: <class 'logging.FileHandler'>
+DEBUG: 10
+time: <built-in function time>
+ts_start: 1637659356.465368
+logger: <Logger __main__ (DEBUG)>
+handler: <FileHandler /Users/ht/googledrive/projects/atcoder/problems/hokudai-hitachi2021/toolkit_A_20211118/
+budget: 47058
+T_max: 7500
+T_last: 6750
+N_div: 15
+N_day: 4
+N_acc: 7
+a_cost: 1700
+w_day: [600.0, 360.0, 480.0, 300.0]
+w_trans: 1.0
+w_ele: 1.0
+w_env: 1.0
+w_acc: 1.0
+a_trans_fee: 18.4
+a_trans_penalty: 0.017377
+a_ele: 0.004407
+a_ele_FE: 0.003553
+a_ele_buy: 0.006763
+a_env_fuel: 0.000375
+a_env_buy: 0.00075
+a_acc: 7000000
+V: 6401
+E: 9780
+vertexs: [[3589, 322, 11, 1559, 10], [-217, -11817, 3, 1915, 14], [-932, -9783, 1, 1636, 8], [-545, -7679, 5,
+edges: [[1, 157, 54], [2, 4020, 4], [2, 4023, 5], [2, 4025, 11], [3, 4069, 13], [3, 4097, 9], [3, 4119, 4],
+N_demand: 2
+demands: [[(2251, 10, [2, 2, 2, 4, 1, 3, 2, 4, 4, 9, 2, 5, 3, 3, 10]), (2251, 30, [5, 5, 4, 8, 2, 7, 5, 8, 8,
+i: 2
+d: 3
+x: 754
+sigma: 10
+D: [7, 7, 7, 8, 10, 9, 13, 14, 11, 21, 23, 23, 20, 12, 13]
+radiations: [[[0.0, 0.0, 0.0, 0.0, 0.373725, 1.673653, 2.673653, 3.51048, 3.047378, 2.210552, 1.210552, 0.0, 0.0
+R: [0.0, 0.0, 0.0, 0.0, 1.345451, 2.345451, 2.978393, 2.978393, 2.978393, 1.978393, 1.345451, 0.0, 0.0,
+N_PV: 3
+N_FE: 4
+N_RB: 3
+N_EVC: 5
+N_V: 3
+PVs: [(10, 97), (12, 81), (15, 73)]
+A_PV: 15
+C_PV_init: 73
+FEs: [(15, 131), (164, 1784), (420, 2732), (0, 0)]
+P_FE_max: 0
+C_FE_init: 0
+RBs: [(22470, 294), (52176, 582), (66411, 882)]
+Cap_RB: 66411
+C_RB_init: 882
+EVCs: [(40, 40, 436), (80, 80, 1196), (160, 160, 1541), (400, 400, 1821), (0, 0, 0)]
+P_EVC_in: 0
+P_EVC_out: 0
+C_EVC_init: 0
+Vehicles: [(223869, 4, 362, 362, 2598, 38), (487132, 6, 432, 432, 6881, 57), (617713, 40, 980, 980, 6147, 216)
+Cap_V_ele: 617713
+Cap_V_pop: 40
+P_V_charge: 980
+P_V_discharge: 980
+C_V_init: 6147
+delta_V_move: 216
+orders: [[3, 18, 18, 30, 30, 30, 18, 18, 18, 18, 18, 18, 18, 18, 18], [3, 17, 17, 28, 28, 28, 17, 17, 17, 17
+N_shelter: 12
+shelter_info: [[1167, 250], [450, 610], [3639, 360], [3831, 570], [3473, 100], [2598, 80], [5838, 200], [3842, 80]
+D_shelter: [3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 5]
+Grid: <class '__main__.Grid'>
+grids: [<__main__.Grid object at 0x10b994550>, <__main__.Grid object at 0x10b994670>]
+EV_type: <class '__main__.EV_type'>
+ev_types: [<__main__.EV_type object at 0x10b994910>, <__main__.EV_type object at 0x10b988d90>, <__main__.EV_ty
+print_infos: <function print_infos at 0x10b96a4c0>
+test: <function test at 0x10ce97040>
+submit: <function submit at 0x10ce970d0>

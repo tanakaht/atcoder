@@ -1,3 +1,7 @@
+# abc010
+
+https://atcoder.jp/contests/abc010/submissions/me
+
 # abc023
 
 https://atcoder.jp/contests/abc023/submissions/me
@@ -131,6 +135,17 @@ https://atcoder.jp/contests/abc131/submissions/me
 
 - 何が起こるのかよく考察する
 - グラフで考える
+
+- 後に解いた
+  - グリッドが一度できると同じx, yについては格子上にできる=>どんどん広げられる
+    - グリッドができる位置を探索(X_cnt[x]>=2 and Y_cnt[y]>=2)
+    - グリッドができるx, yの集合を広げていく
+    - 広げれなくなったら終了
+  - 広げるのは全体でたかだかN回かつ既出のx,yをsetで保持すればO(1)で広げられる
+  - グリッド探索はO(N)
+- 解説見て
+  - グラフは頭いいなあ
+  - 綺麗にかけるね
 
 # abc132
 
@@ -419,6 +434,14 @@ https://atcoder.jp/contests/abc149/submissions/me
 - 期待値、sumの撮り方をかえる
 - グラフの取り扱いが苦手だなと思った
 
+- のちに解いた
+  - 各頂点がansに寄与する=その頂点が白い、かつ、その頂点を根とした時の子の部分木について2つ以上が黒を含む
+  - 各頂点について子孫ノードを数えれば良い
+  - dfsなmemo再帰で数える=>再帰深すぎてTLE
+  - dfsの逆順でやる=>再帰がたかだか1で済む
+  - 関数呼ばれる総回数は同じだけど...
+  - 全方位木dpでやる？
+
 # abc150
 
 https://atcoder.jp/contests/abc150/submissions/me
@@ -624,6 +647,7 @@ https://atcoder.jp/contests/abc172/submissions/me
   - a^bのbitが立っているもののみ考えれば良い
     - 上のbitからA[0]を超えないように貪欲にaに足していけば良い
 
+
 # abc176
 
 https://atcoder.jp/contests/abc176/submissions/me
@@ -645,6 +669,7 @@ https://atcoder.jp/contests/abc176/submissions/me
 
 - 問題の理解が足りていなかった
 - 状態として何が必要か考える
+
 
 # abc178
 
@@ -802,13 +827,292 @@ https://atcoder.jp/contests/abc186/submissions/me
     - phi(m) = pi_{k}(1-1/p_k) (p_kはmの約数)
     - k, mが互いに素ならk^i, mも互いに素である。
 
+# abc187
+
+https://atcoder.jp/contests/abc187/submissions/me
+
+# abc188
+
+https://atcoder.jp/contests/abc188/submissions/me
+
+## D
+
+- event queで出たり入ったり
+
+## E
+
+- iからいけるまちで最も高いところをdpでもつ
+- 後ろからやればiから一回でいける街を見れば十分
+
+## F
+
+- 桁dp
+- 1あまりですか？, i桁目までok の最小手数のdp
+- 最初に合わせるところでなんか苦戦した
+
+# abc189
+
+https://atcoder.jp/contests/abc189/submissions/me
+
+## B
+
+- できるだけintを使う
+
+## C
+
+- 想定解(全探索)
+  -　ただし、探索の仕方を工夫する
+  - l固定,rを増やしていくと最適なxがO(1)で定まる
+- 自分
+  - セグ木生やしてlrを全探索=>TLE
+  - x=A[i]なるiがある=>(A[j]>=A[i])なjしか含まないlrを二部たん=>通ったけどCだぞ？
+  - Fまで解いてから: aの小さい順に見て行けばいいな(過去に出現したidxを探ればlrが見つかる)=>二部たんでO(nlogn)(でた値をsortしながら持つので最悪O(n^2))
+
+## D
+
+- dpしてくださいって問題
+
+## E
+
+- xy座標の変化を出したら、全て線形変換でいける
+- 行列のあれを出してる感じで各操作ごとに変換の行列を保持すれば良い
+- (0, 0), (0, 1), (1, 0)を追跡しても良い
+
+## F
+
+- いかにも後ろからdpしそうな問題
+- 期待値はここから先の踏むやつ+1でいける
+- 0に戻るっては0からの期待値を仮でおく
+- iからゴールへの期待値を定数+(0からの期待値)*(係数)で持ってdp
+- 最終的に(0からの期待値)=定数+(0からの期待値)*(係数)になって溶ける
+
+# abc190
+
+https://atcoder.jp/contests/abc190/submissions/me
+
+## D
+
+- 公差1の数列(a, a+1...b)の和(=(a+b)(b-a+1)/2)=Nなものの数を求めよ
+- 条件を満たすa, bの数を数える
+- N==(a+b)(b-a+1)/2), (a+b)=i, (b-a+1)=jとするとa,bとi,jは一対一, 2*Nの約数についてi, jをおいて探索(ただしa,bが整数か確認)
+
+## E
+
+- グラフへの変換
+- C[i]から各ノードへの最短距離の計算=>C[i]からC[j]の最短がわかる
+- C[0], ... C[K]のグラフについて巡回セールスマン
+  - 最終到達点と行った場所(bitで保持)についてbitdp
+  - 行った場所のidx, i, jについてi<jなiが全てもとまっていればjが定まる
+  - iについて探索,配るdp
+  - なんか無駄にbfsみたいにしてtleし続けてしまった
+
+## F
+
+- 転倒数カウント
+- 先頭から末尾に渡して変化をカウント
+- これなんでF?
+
+# abc191
+
+https://atcoder.jp/contests/abc191/submissions/me
+
+## C
+
+- 問題の意味がようわからんかった
+
+## D
+
+- 精度の問題
+  - 受け取り方: Decimal
+  - intにしてしまう
+  - round?とintの違い？
+
+## E
+
+- 優先度付キューでダイクストラ法
+  - 同じところをできるだけ踏まない
+  - できるだけキューに突っ込まない
+    - たかだか(N+M)回入ってくる
+    - 訪問済みをマークする(最短距離で楽しようとするとキューに無駄に入る)
+    - 最悪N*M回でやってしもうた
+
+## F
+
+- 問題からgcdだけ使ってできる値を探れば十分だと理解
+- dpぽくやろうとしていた
+- 満たすべき条件から探る
+  - xはある数の約数である, xを約数を持つ要素全てでgcdとったらxになる
+
+# abc192
+
+https://atcoder.jp/contests/abc192/submissions/me
+
+# abc193
+
+https://atcoder.jp/contests/abc193/submissions/me
+
+## D
+
+- 計算がやらしい
+
+## E
+
+- 制約が小さい部分で全探索する
+- An+B=Cm+D をn, mについてとく=>crt
+  - x = An+B=Cm+D (mod A*B)とする
+  - crtで最小のxが得られる
+
+## F
+
+- グラフにできそうだなーでうまいことflowの問題にできそうだなーで終わった
+- 燃やす埋める問題
+    - https://www.slideshare.net/shindannin/project-selection-problem
+    - https://kimiyuki.net/blog/2017/12/05/minimum-cut-and-project-selection-problem/
+    - A,Bのグループ分けをして条件に応じて得られる点数の最大化(最小化)=sにA(B), tにB(A)を当てるとして、点数、制約を流量とした最小カット問題にできる
+    - 点数の流量化
+        - 最小化問題にする: 得られる特典はあらかじめ得ておいて、見逃した特典を最小化する
+    - 制約の流量化(いけない部分を切られないようにする)
+        - u, vが違うグループならxの罰則: uからvにxの流量
+        - uはグループA(B): sからu(uからt)へINFの流量
+        - u, vが同じグループならxの罰則: vを反転させてuからvへxの流量
+    - 独立な状態の追加
+        - 複数のーどで一つのアイテムの状態を表し、それらの間にうまく制約を張ってうまいこといける場合がある
+
+# abc194
+
+https://atcoder.jp/contests/abc194/submissions/me
+
+- どうせ出すんだからnosubしようとするのをやめる
+- 順位表も見ない
+
+## C
+
+- 式ガチャガチャしてO(N^2)=>O(N)にするやつ
+  - 依存してないやつをまとめると、自然にできる
+
+## D
+
+- 期待値苦手
+  - Xの期待値の定義: sum_X(X*P(X))
+  - 定義から、線形性(X = x1+x2...+xnな時、Xの期待値=sum_i(xiの期待値))
+- 期待値の計算
+  1. 定義どうり全事象についてたしあわせ
+  2. 線形性使って分離して計算
+  3. dp?
+- 確率の話
+  - 確率pの事象が最初に起こる回数の期待値=1/p (sum_i((1-p)^i*(p))=p*(1/(1-(1-p))^2)= 1/p)
+
+## E
+
+- しょうもなみす
+- 連続してM回出現しない最小の自然数を答えると読みかえ
+
+## F
+
+- 桁dp
+- 遷移をコード書きながら考えてしまって、ぐっちゃぐちゃになった。簡単だったから早解きしないと、という焦りがあった。自分の脳では考えながらは無理なので、**きちんと考え切って(dpの遷移を書いて)からコードかく**(n度め)
+- 桁iにおいて1以上(Nの上からi桁目まで)未満で、16進数でk種類の文字を用いるものを数える。
+- 場合わけ
+  1. 上から(i-1)桁はNと同じもの
+    1. i桁目が既出=>k=(i-1)桁の文字種 に文字種分追加
+    2. i桁目が未出=>k=(i-1)桁の文字種+1 に16-文字種分追加
+  2. 1桁のもの
+    1. 0以外の15個=>k=1(i>1)
+    2. Nの最上位桁未満=>k=1(i=1)
+  3. 2桁以上で上から(i-1)桁はNの(i-1)桁未満
+    1. i-1, k-1から16-(k-1)倍して入る
+    2. i-1, kからk倍して入る
+
+# abc195
+
+https://atcoder.jp/contests/abc195/submissions/me
+
+## E
+
+- ゲーム系
+- この数がきたら必勝を後ろからdpしていく
+
+## F
+
+- 素数の間隔
+- 使った素数についてbitdpする
+- なぜ気づけなかったか
+    - 最初にグラフが見えてしまった
+    - 制約小さいけどO(2^n)は無理=>何かそれより小さくて探索できそうなのを探るべきだ
+        - 2つの素数の領域に被るものを割り当てきめ打ちでやる=>sampleで25個, 1~72で42個でだめそう
+            - この方針を頑張ってしまった、被りが多いものを先に除外するとうまいこと減るんじゃね？
+        - 半分全探索？=>って制約でもないなあ
+
+# abc196
+
+https://atcoder.jp/contests/abc196/submissions/me
+
+# abc197
+
+https://atcoder.jp/contests/abc197/submissions/me
+
+## C
+
+- 何このやらかし(for文まともに書けない漢になっていた)
+
+## D
+
+- 角度の計算方法をきちんと
+  - acos(a)=>上の半円上のx=aとの交点のなす角を0~piで返す。yが負なら-1かければ良い
+  - atan2(x, y)でよかったのか...
+- 精度の問題かなあと思って怖がってやっていたのがよくなかったと思う。その辺勉強
+
+## E
+
+- xにいるときにlからrまであるものを拾うのにx=>l=>rかx=>r=>lしか考えないで良い
+- dp
+
+## F
+
+- オートマトンっぽいなあ
+- ゴール{1...N}について、スタート{1,N}の二種のオートマトンで共通の文字を受理していれば良い=>奇数文字の回文があって嘘でした
+  - オートマトンの合成(２つの状態のタプルを状態として扱う)でやればいける。計算量も幅優先探索すれば良いのでO(N^2+M^2)でいける
+
+# abc198
+
+https://atcoder.jp/contests/abc198/submissions/me
+
+# abc199
+
+https://atcoder.jp/contests/abc199/submissions/me
+
+## D
+
+- これD?
+- 全探索はO(n^3)でout
+- 隣接は同色ダメなので実際探索すべきはO(n^2)で抑えられる
+- 参照すべき先のnodeをそれぞれ決めてbit全探索(参照先に対してbitが0=>+1, 1=>+2で色決める)
+
+## E
+
+- N=18なので2^Nしそうだなあ,N!は無理だなあ
+- 使用した数字(bit)*何個目まで並べた=>組み合わせ
+- 時折、制約がやってきて満たしていないものの組み合わせを0にしていく
+
+
+## F
+
+- 遷移が線形でかける＋状態数が少ない=>行列累乗
+- めちゃ簡単(なはずだった)
+- 行列積の精度で殺された
+  1. 3重ループで毎度modとる
+  2. 上位15bit, 下位15bitでやって結果をマージする(天才!!!)
+
 # abl
 
 https://atcoder.jp/contests/abl/submissions/me
 
 ## e
 
-- 遅延seg?
+- 遅延seg
+  - tupleをもってやる
+- lazy segtreeの高速化
+  - tupleだと間に合わない時、64bitを32bitで区切って前半を要素1、後半を要素2に割り当てるテクニック、これで間に合った
 
 ## f
 
@@ -821,6 +1125,22 @@ https://atcoder.jp/contests/acl1/submissions/me
 ## B
 
 - 中国剰余定理
+
+# agc010
+
+https://atcoder.jp/contests/agc010/submissions/me
+
+# agc026
+
+https://atcoder.jp/contests/agc026/submissions/me
+
+# agc036
+
+https://atcoder.jp/contests/agc036/submissions/me
+
+# agc046
+
+https://atcoder.jp/contests/agc046/submissions/me
 
 # agc048
 
@@ -862,9 +1182,41 @@ https://atcoder.jp/contests/agc048/submissions/me
 
 https://atcoder.jp/contests/agc049/submissions/me
 
+# agc050
+
+https://atcoder.jp/contests/agc050/submissions/me
+
+# agc052
+
+https://atcoder.jp/contests/agc052/submissions/me
+
+# agc053
+
+https://atcoder.jp/contests/agc053/submissions/me
+
+# ahc001
+
+https://atcoder.jp/contests/ahc001/submissions/me
+
+# ahc002
+
+https://atcoder.jp/contests/ahc002/submissions/me
+
+# arc064
+
+https://atcoder.jp/contests/arc064/submissions/me
+
+# arc066
+
+https://atcoder.jp/contests/arc066/submissions/me
+
 # arc072
 
 https://atcoder.jp/contests/arc072/submissions/me
+
+# arc091
+
+https://atcoder.jp/contests/arc091/submissions/me
 
 # arc092
 
@@ -1129,9 +1481,104 @@ https://atcoder.jp/contests/arc110/submissions/me
 - 操作手順ではなく、操作結果の数え上げなので、生成できるものの特徴を探す=>不変量
 - 部分に区切って不変量との関係をみる
 
+# arc111
+
+https://atcoder.jp/contests/arc111/submissions/me
+
+## B
+
+- 色を頂点、同じカード間で辺を貼ったグラフを考える
+- 連結成分について、辺の数=>頂点の数であれば全ての色が取れる,そうでなければ一色だけ取れない
+- ufして、木か判定する
+
+- かなり悩んだら、グラフでやってみるは行けそうなきがしていた
+- 端っこから一個とっておしだすってなイメージで行けそう=>とけた
+
+## C
+
+- 自分の荷物持ってなくて疲れてる人いたらNG
+- 絶対自分の荷物持ってない回数ぶんは必要
+- 軽い人から自分の荷物を受け取る=>反対側は疲れない よって最適にできる
+
+## D
+
+- 強連結成分(定義: 任意の二点間が互いに到達可能)
+- 辺があって、cが同じ=>強連結、そうでなければc_i>c_jなiからjに向きづけする
+- 強連結成分を作るという問題になる
+- DFS木
+  - 適当な頂点からDFSして、未到達な頂点に行った時の辺だけ用いた時にできる木
+  - vの訪問順をord_v, 深さをdeg_vとする
+  - 訪問済みの頂点を訪れた辺は後退辺と呼ぶ
+  - lowlink_v: vから後退辺を高々一度だけ、その他の辺を何度でも使っていける頂点でもっとも浅い頂点
+  - p, vを繋ぐ辺が橋である<=>deg[p]<deg[lowlink_v]
+    - 再帰的に根にいける
+- DFS木を作ればOK
+  - 訪問順を記録しながらdfs, 訪問ずみの頂点に行く辺は若い方に渡す
+
+- ループでうまいこと回そうとしてだめだった
+- より簡単な構造を探す
+
+# arc112
+
+https://atcoder.jp/contests/arc112/submissions/me
+
+## B
+
+- あほ
+- 提出デバッグしまくってしまった
+
+## C
+
+- 木dp
+  - 戦略が少しややこしく感じ、整理するのに時間がかかってしまった+そこでMLEの原因となった無駄な再帰をしてしまった？
+- 余計な再帰はできればしない
+
+## D
+
+- 地面の上は移動できず、地面の手前で止まると誤読, あほ
+- 行、列を頂点とした二部グラフを観察する
+- 地面のある行と列にあるますはその中の一点を支点として移動可能
+
+## E
+
+- 最後の操作以外は最終位置に関係ない
+  - 操作列を観察すれば気づけたはず
+
+# arc112_b
+
+https://atcoder.jp/contests/arc112_b/submissions/me
+
+# arc113
+
+https://atcoder.jp/contests/arc113/submissions/me
+
+# arc114
+
+https://atcoder.jp/contests/arc114/submissions/me
+
+# arc115
+
+https://atcoder.jp/contests/arc115/submissions/me
+
+# arc116
+
+https://atcoder.jp/contests/arc116/submissions/me
+
+# arc117
+
+https://atcoder.jp/contests/arc117/submissions/me
+
 # chokudai005
 
 https://atcoder.jp/contests/chokudai005/submissions/me
+
+# ddcc2020-qual
+
+https://atcoder.jp/contests/ddcc2020-qual/submissions/me
+
+# dwacon6th-prelims
+
+https://atcoder.jp/contests/dwacon6th-prelims/submissions/me
 
 # future-contest-2021-qual
 
@@ -1171,6 +1618,43 @@ https://atcoder.jp/contests/hitachi2020/submissions/me
 - 不変量に注目できるように式変換する
 - 探索範囲を探索結果が満たす条件から狭める
 
+# jsc2019-qual
+
+https://atcoder.jp/contests/jsc2019-qual/submissions/me
+
+# jsc2021
+
+https://atcoder.jp/contests/jsc2021/submissions/me
+
+# keyence2020
+
+https://atcoder.jp/contests/keyence2020/submissions/me
+
+# keyence2021
+
+https://atcoder.jp/contests/keyence2021/submissions/me
+
+## C
+
+- 方針はすぐたった
+- 高速化が足りなかった
+- 計算するものはできるだけ減らす(開きますを埋めるのは最後にまとめる)
+- 定数倍だから納得言っとらんけど実装のテクニック的に未熟だった
+
+## D
+
+- 操作の度に何が起こるのか確認する
+  - 同じチームのsumがpow(2, N-1)-1,違うチームのsumがpow(2, N-1)増える
+  - n:m = pow(2, N-1)-1: pow(2, N-1)
+  - 操作はpow(2, N)-1の倍数やる
+- 時間かければ行けたかも
+
+# kupc2019
+
+https://atcoder.jp/contests/kupc2019/submissions/me
+
+
+
 # kupc2020
 
 https://atcoder.jp/contests/kupc2020/submissions/me
@@ -1188,7 +1672,260 @@ https://atcoder.jp/contests/kupc2020/submissions/me
 - f*fで溶けることを見つけたならそこから広げればよかった
   - f*fでできる偶数でできる=>(f^2とrestをそれぞれといてconcatする)
 
+# m-solutions2020
+
+https://atcoder.jp/contests/m-solutions2020/submissions/me
+
+## E
+
+- 高速化
+  - 3進数のbit全探索高速化
+    - 各桁にbitがたっているか=>bit, 1がたっている=>xbit, 2がたっている=>ybitとする
+    1. bitを全探索する(for bit in range(pow(2, N)))
+    2. そのbitのなかでxbitを全探索する
+```
+while True:
+    ybit = bit^xbit
+    hogehoge
+    xbit -= 1
+    if xbit < 0:
+        break
+    xbit &= bit
+```
+
+# nikkei2019-2-qual
+
+https://atcoder.jp/contests/nikkei2019-2-qual/submissions/me
+
+# paiza
+
+https://atcoder.jp/contests/paiza/submissions/me
+
+## s022
+
+- u-vの点連結度(最小でいくつ頂点を消せばu-vが非連結になるか)の計算
+  - maxflowに帰着する(https://todo314.hatenadiary.org/entry/20130814/1376487795)
+  - (辺連結度)>=(点連結度)なので、一つの頂点に関する全エッジの削除をコスト1でできるように架空の頂点を追加
+      - s, t以外の各頂点を2つに分ける(入ってくるノードv1,出ていくノードv2), v1->v2に容量1のエッジ
+      - 元のグラフを再現
+
+# past202104
+
+https://atcoder.jp/contests/past202104/submissions/me
+
+## N
+
+- 順序の最適を探す
+- 組み合わせは部が悪いのでなんとか式変換して一つの添字で評価できる値を探す
+
+## O
+
+- 木+alphaなので木の構造を使いそう
+- 適当に全域部分木をとって木以外のエッジを使う場合なんとかする
+  - 木だけ使う=>lcaを使うやつ
+  - 木以外=>ある木以外のエッジの端点が存在してそれは最短経路に含まれる=>その点からの最短距離の和を求める
+
+# practice2
+
+https://atcoder.jp/contests/practice2/submissions/me
+
+# tenkei
+
+https://atcoder.jp/contests/tenkei/submissions/me
+
 # tokiomarine2020
 
 https://atcoder.jp/contests/tokiomarine2020/submissions/me
+
+# typical90
+
+https://atcoder.jp/contests/typical90/submissions/me
+
+## a
+
+- 値をにぶたん
+
+## b
+
+- bit全探索
+- 正しい括弧列 <=> {"(": 1, ")": -1}として、累積和が全て正かつsum=0
+  - (=>): 正しい括弧列は()の数が常に等しい、"(", ")"は常にセットで作られ、"("は常に左である
+  - (<=): 帰納法: 途中で0なら二つに分けれる、そうでなければ端が0, 1, (>1な要素), 1, 0なので"("+2小さい条件を満たすもの+")"にできる
+
+## c
+
+- 木の直径: dfsして一番遠いのを2回やる(d[i, j]<=d[i, 0]+d[0, j], 0を通るなら=が成り立つ、通らなければ最初の距離最大以下の距離になっている)
+
+## d
+
+- なんもねえ
+
+## e
+
+- 桁dp
+- できるだけ単純に記述できる遷移を探す
+- 遷移がかけたら、、、
+  - 行列累乗(遷移が線形でかける=>行列にできる)
+  - ダブリングっぽく(i回の遷移"結果"とj回の遷移"結果"からi+j回の遷移"結果"が出せる)
+- convolve
+- 自分の解法(e_copy)
+  - 10倍して下に一つタス、ではなく、一番上に一つタス、でやった（やってしまった）
+  - ループするやつ(10^i%Bのrestがループするのでループの部分の遷移は速い)
+- 形式的冪級数でできるかと思ったけど厳しい？
+  - 少なくとも線形漸化式にはならない
+  - x^i -> x^(10*i) がうまいこと書けない
+
+## f
+
+- 貪欲法
+- 区間クエリとデータ構造まとめ
+  - 区間の最小値(更新なし)(逆元のない演算)
+    - Sparce Table
+  - 区間の最小値(更新あり)(逆元のない演算)
+    - segtree
+  - 区間の和(更新なし)(逆元のある演算)
+    - 累積和
+  - 区間の和(更新あり)(逆元のある演算)
+    - BIT
+
+## g
+
+- 貪欲方
+- クエリ先読み
+- (解説見て)にぶたんの方か
+
+## h
+
+- dpするだけ
+
+## i
+
+- sortしてぐるぐる回す
+- 実装上、冗長な配列を用意すると便利
+- logつけていいみたいなのでにぶたんでも可
+
+## j
+
+- Mo知ったばかりなので試してみた
+- 普通に逆元ある演算の更新なしの区間のクエリなので累積和で十分だし、何使っても良い
+
+## k
+
+- 何か決め打った時の最適なパターンを考察する。
+  - やる仕事決め打ったときに、最適な順序=>締め切り速い順にやる
+- 小さいor簡単な問題に分割したい
+  - かかる時間=>報酬の最大値について、今までのものより締め切り順が遅いものは用意にマージできる(最後に追加するorしないの二択)=>締め切り順にsortしてdp
+
+## l
+
+- 更新なし連結判定=>dfs, bfs
+- edge追加あり連結判定=>unionfind
+- edge追加、削除あり連結判定=>あるようなtweet見たけどあるの？
+
+## m
+
+- kを経由しての最短距離=kへの最短距離の和
+- dijkstora
+
+## n
+
+- クロスすると損なのでsortした順にペア作る
+
+## o
+
+- 案外探索できるやつ
+- 調和級数の和=log(N)
+- sumの式で書いて計算量を計算する
+
+## p
+
+- ちょっと工夫して計算量減らす全探索
+
+## q
+
+- 条件の言い換え: (a,b), (c,d)が交差する<=>(a<c<b<dのようになっている)
+- 任意jの[i, j)に答えられるseg木から[i+1, j)に答えられるセグ木を簡単に作れる
+- iをずらしながら回答していく
+
+## r
+
+- やるだけ？
+- atan2
+
+## s
+
+- 区間dpやるだけ
+- 小さな問題に分けられる
+
+## t
+
+- 精度
+- できるだけ整数で
+
+## u
+
+- 強連結分解
+  - i->jかつj->i <=> 元のグラフと辺を逆転させたグラフでともにi->j
+  - dfsして帰りがけの時の順序を記録、dfs_order[i] > dfs_order[j] => (iを先に訪問しi->j or jを先に訪問し(j->iでない))
+  - (dfs_order[i] > dfs_order[j] かつ　j->i )=> (i->jかつj->i)
+  - 帰りがけのdfs記録+dfs_orderの大きい順にdfsして辿り着けるとこは同じグループ
+
+## v
+
+- gcd
+
+## w
+
+- 1. bit全探索
+- 2. dp化
+- 3. 状態を減らす
+- 4. 遷移を減らす(a or b = c)かつa and b = 0なa,bにedgeが晴れる
+
+- 解説見て、嘘じゃないけど犯罪だった
+- 解説の方が通らん...
+
+## x
+
+- パリティ(偶奇性)
+
+## y
+
+- 案外探索できるやつ
+- f(m)の値を探索
+  - 2~9の累乗の掛け合わせのみ探索(評価？)=>重複組み合わせで21C10で抑えられる
+
+## z
+
+- 適当にグループ分けできれば片方は過半数
+- depthの偶奇で分ければ大井を満たす色塗りになっている
+
+# utpc2020
+
+https://atcoder.jp/contests/utpc2020/submissions/me
+
+# zone2021
+
+https://atcoder.jp/contests/zone2021/submissions/me
+
+## C
+
+- 無駄にテンパった
+
+
+## E
+
+- 拡張したグラフ
+- 移動中という状態を保持
+
+## F
+
+- 言い換え１: (a^b in A　=>　a->bにエッジ晴れない)　<=>　(a^b in B => エッジ晴れる)
+- 言い換え2: 木にできない　=> あるiが存在して0->iではない
+  - コンテスト中ガバだったけど普通に逆も言える
+- 言い換え3: 0->iである <=> b in B のxorの組み合わせでiが作れる
+- Bで基底だけ使ってきを作れば良い(たかだか18個の基底*頂点数)
+- 基底の撮り方(コンテスト中)
+  - 既存の基底を並べた行列MについてMx=bを満たすxが存在しないbを追加していく
+  - Mを上三角にして保持する
+  - 解があるならxの上から一位に定まる=>0でなければタス
 

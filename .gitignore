@@ -1,7 +1,7 @@
 __pycache__
 .DS_Store
 .idea
-tmp.txt
 Icon
-test
-input.txt
+*/test/*
+*/testcases/*
+loginconfig.py

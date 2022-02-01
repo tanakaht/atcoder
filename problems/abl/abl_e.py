@@ -1,225 +1,239 @@
-import sys
-input = sys.stdin.buffer.readline
-MOD = 998244353
+import typing
 
-# ----- seg tree設定 ----- #
+def _ceil_pow2(n: int) -> int:
+    x = 0
+    while (1 << x) < n:
+        x += 1
 
-e = 0
-id = 1 << 32
+    return x
 
+class LazySegTree:
+    def __init__(
+            self,
+            op: typing.Callable[[typing.Any, typing.Any], typing.Any],
+            e: typing.Any,
+            mapping: typing.Callable[[typing.Any, typing.Any], typing.Any],
+            composition: typing.Callable[[typing.Any, typing.Any], typing.Any],
+            id_: typing.Any,
+            v: typing.Union[int, typing.List[typing.Any]]) -> None:
+        self._op = op
+        self._e = e
+        self._mapping = mapping
+        self._composition = composition
+        self._id = id_
 
-def op(a, b):
-    a1, a2 = a >> 32, a % (1 << 32)
-    b1, b2 = b >> 32, b % (1 << 32)
-    c1 = (a1 + b1) % MOD
-    c2 = (a2 + b2) % MOD
-    return (c1 << 32) + c2
+        if isinstance(v, int):
+            v = [e] * v
 
+        self._n = len(v)
+        self._log = _ceil_pow2(self._n)
+        self._size = 1 << self._log
+        self._d = [e] * (2 * self._size)
+        self._lz = [self._id] * self._size
+        for i in range(self._n):
+            self._d[self._size + i] = v[i]
+        for i in range(self._size - 1, 0, -1):
+            self._update(i)
 
-def mapping(x, a):
-    x1, x2 = x >> 32, x % (1 << 32)
-    a1, a2 = a >> 32, a % (1 << 32)
-    c1 = (a1 * x1 + a2 * x2) % MOD
-    c2 = a2
-    return (c1 << 32) + c2
+    def set(self, p: int, x: typing.Any) -> None:
+        assert 0 <= p < self._n
 
+        p += self._size
+        for i in range(self._log, 0, -1):
+            self._push(p >> i)
+        self._d[p] = x
+        for i in range(1, self._log + 1):
+            self._update(p >> i)
 
-def composition(x, y):
-    x1, x2 = x >> 32, x % (1 << 32)
-    y1, y2 = y >> 32, y % (1 << 32)
-    z1 = (x1 * y1) % MOD
-    z2 = (x1 * y2 + x2) % MOD
-    return (z1 << 32) + z2
+    def get(self, p: int) -> typing.Any:
+        assert 0 <= p < self._n
 
-# ----- seg tree設定 ここまで ----- #
+        p += self._size
+        for i in range(self._log, 0, -1):
+            self._push(p >> i)
+        return self._d[p]
 
+    def prod(self, left: int, right: int) -> typing.Any:
+        assert 0 <= left <= right <= self._n
 
-class LazySegmentTree():
-    def __init__(self, n, op, e, mapping, composition, id):
-        self.n = n
-        self.op = op
-        self.e = e
-        self.mapping = mapping
-        self.composition = composition
-        self.id = id
-        self.log = (n - 1).bit_length()
-        self.size = 1 << self.log
-        self.d = [e] * (2 * self.size)
-        self.lz = [id] * (self.size)
+        if left == right:
+            return self._e
 
-    def update(self, k):
-        self.d[k] = self.op(self.d[2 * k], self.d[2 * k + 1])
+        left += self._size
+        right += self._size
 
-    def all_apply(self, k, f):
-        self.d[k] = self.mapping(f, self.d[k])
-        if k < self.size:
-            self.lz[k] = self.composition(f, self.lz[k])
+        for i in range(self._log, 0, -1):
+            if ((left >> i) << i) != left:
+                self._push(left >> i)
+            if ((right >> i) << i) != right:
+                self._push(right >> i)
 
-    def push(self, k):
-        self.all_apply(2 * k, self.lz[k])
-        self.all_apply(2 * k + 1, self.lz[k])
-        self.lz[k] = self.id
+        sml = self._e
+        smr = self._e
+        while left < right:
+            if left & 1:
+                sml = self._op(sml, self._d[left])
+                left += 1
+            if right & 1:
+                right -= 1
+                smr = self._op(self._d[right], smr)
+            left >>= 1
+            right >>= 1
 
-    def build(self, arr):
-        # assert len(arr) == self.n
-        for i in range(self.n):
-            self.d[self.size + i] = arr[i]
-        for i in range(1, self.size)[::-1]:
-            self.update(i)
+        return self._op(sml, smr)
 
-    def set(self, p, x):
-        # assert 0 <= p < self.n
-        p += self.size
-        for i in range(1, self.log + 1)[::-1]:
-            self.push(p >> i)
-        self.d[p] = x
-        for i in range(1, self.log + 1):
-            self.update(p >> i)
+    def all_prod(self) -> typing.Any:
+        return self._d[1]
 
-    def get(self, p):
-        # assert 0 <= p < self.n
-        p += self.size
-        for i in range(1, self.log + 1):
-            self.push(p >> i)
-        return self.d[p]
+    def apply(self, left: int, right: typing.Optional[int] = None,
+              f: typing.Optional[typing.Any] = None) -> None:
+        assert f is not None
 
-    def prod(self, l, r):
-        # assert 0 <= l <= r <= self.n
-        if l == r:
-            return self.e
-        l += self.size
-        r += self.size
-        for i in range(1, self.log + 1)[::-1]:
-            if ((l >> i) << i) != l:
-                self.push(l >> i)
-            if ((r >> i) << i) != r:
-                self.push(r >> i)
-        sml = smr = self.e
-        while l < r:
-            if l & 1:
-                sml = self.op(sml, self.d[l])
-                l += 1
-            if r & 1:
-                r -= 1
-                smr = self.op(self.d[r], smr)
-            l >>= 1
-            r >>= 1
-        return self.op(sml, smr)
+        if right is None:
+            p = left
+            assert 0 <= left < self._n
 
-    def all_prod(self):
-        return self.d[1]
+            p += self._size
+            for i in range(self._log, 0, -1):
+                self._push(p >> i)
+            self._d[p] = self._mapping(f, self._d[p])
+            for i in range(1, self._log + 1):
+                self._update(p >> i)
+        else:
+            assert 0 <= left <= right <= self._n
+            if left == right:
+                return
 
-    def apply(self, p, f):
-        # assert 0 <= p < self.n
-        p += self.size
-        for i in range(1, self.log + 1)[::-1]:
-            self.push(p >> i)
-        self.d[p] = self.mapping(f, self.d[p])
-        for i in range(1, self.log + 1):
-            self.update(p >> i)
+            left += self._size
+            right += self._size
 
-    def range_apply(self, l, r, f):
-        # assert 0 <= l <= r <= self.n
-        if l == r:
-            return
-        l += self.size
-        r += self.size
-        for i in range(1, self.log + 1)[::-1]:
-            if ((l >> i) << i) != l:
-                self.push(l >> i)
-            if ((r >> i) << i) != r:
-                self.push((r - 1) >> i)
-        l2 = l
-        r2 = r
-        while l < r:
-            if l & 1:
-                self.all_apply(l, f)
-                l += 1
-            if r & 1:
-                r -= 1
-                self.all_apply(r, f)
-            l >>= 1
-            r >>= 1
-        l = l2
-        r = r2
-        for i in range(1, self.log + 1):
-            if ((l >> i) << i) != l:
-                self.update(l >> i)
-            if ((r >> i) << i) != r:
-                self.update((r - 1) >> i)
+            for i in range(self._log, 0, -1):
+                if ((left >> i) << i) != left:
+                    self._push(left >> i)
+                if ((right >> i) << i) != right:
+                    self._push((right - 1) >> i)
 
-    def max_right(self, l, g):
-        # assert 0 <= l <= self.n
-        # assert g(self.e)
-        if l == self.n:
-            return self.n
-        l += self.size
-        for i in range(1, self.log + 1)[::-1]:
-            self.push(l >> i)
-        sm = self.e
-        while True:
-            while l % 2 == 0:
-                l >>= 1
-            if not g(self.op(sm, self.d[l])):
-                while l < self.size:
-                    self.push(l)
-                    l = 2 * l
-                    if g(self.op(sm, self.d[l])):
-                        sm = self.op(sm, self.d[l])
-                        l += 1
-                return l - self.size
-            sm = self.op(sm, self.d[l])
-            l += 1
-            if (l & -l) == l:
-                return self.n
+            l2 = left
+            r2 = right
+            while left < right:
+                if left & 1:
+                    self._all_apply(left, f)
+                    left += 1
+                if right & 1:
+                    right -= 1
+                    self._all_apply(right, f)
+                left >>= 1
+                right >>= 1
+            left = l2
+            right = r2
 
-    def min_left(self, r, g):
-        # assert 0 <= r <= self.n
-        # assert g(self.e)
-        if r == 0:
+            for i in range(1, self._log + 1):
+                if ((left >> i) << i) != left:
+                    self._update(left >> i)
+                if ((right >> i) << i) != right:
+                    self._update((right - 1) >> i)
+
+    def max_right(
+            self, left: int, g: typing.Callable[[typing.Any], bool]) -> int:
+        assert 0 <= left <= self._n
+        assert g(self._e)
+
+        if left == self._n:
+            return self._n
+
+        left += self._size
+        for i in range(self._log, 0, -1):
+            self._push(left >> i)
+
+        sm = self._e
+        first = True
+        while first or (left & -left) != left:
+            first = False
+            while left % 2 == 0:
+                left >>= 1
+            if not g(self._op(sm, self._d[left])):
+                while left < self._size:
+                    self._push(left)
+                    left *= 2
+                    if g(self._op(sm, self._d[left])):
+                        sm = self._op(sm, self._d[left])
+                        left += 1
+                return left - self._size
+            sm = self._op(sm, self._d[left])
+            left += 1
+
+        return self._n
+
+    def min_left(self, right: int, g: typing.Any) -> int:
+        assert 0 <= right <= self._n
+        assert g(self._e)
+
+        if right == 0:
             return 0
-        r += self.size
-        for i in range(1, self.log + 1)[::-1]:
-            self.push((r - 1) >> i)
-        sm = self.e
-        while True:
-            r -= 1
-            while r > 1 and r % 2:
-                r >>= 1
-            if not g(self.op(self.d[r], sm)):
-                while r < self.size:
-                    self.push(r)
-                    r = 2 * r + 1
-                    if g(self.op(self.d[r], sm)):
-                        sm = self.op(self.d[r], sm)
-                        r -= 1
-                return r + 1 - self.size
-            sm = self.op(self.d[r], sm)
-            if (r & -r) == r:
-                return 0
+
+        right += self._size
+        for i in range(self._log, 0, -1):
+            self._push((right - 1) >> i)
+
+        sm = self._e
+        first = True
+        while first or (right & -right) != right:
+            first = False
+            right -= 1
+            while right > 1 and right % 2:
+                right >>= 1
+            if not g(self._op(self._d[right], sm)):
+                while right < self._size:
+                    self._push(right)
+                    right = 2 * right + 1
+                    if g(self._op(self._d[right], sm)):
+                        sm = self._op(self._d[right], sm)
+                        right -= 1
+                return right + 1 - self._size
+            sm = self._op(self._d[right], sm)
+
+        return 0
+
+    def _update(self, k: int) -> None:
+        self._d[k] = self._op(self._d[2 * k], self._d[2 * k + 1])
+
+    def _all_apply(self, k: int, f: typing.Any) -> None:
+        self._d[k] = self._mapping(f, self._d[k])
+        if k < self._size:
+            self._lz[k] = self._composition(f, self._lz[k])
+
+    def _push(self, k: int) -> None:
+        self._all_apply(2 * k, self._lz[k])
+        self._all_apply(2 * k + 1, self._lz[k])
+        self._lz[k] = self._id
 
 
-def main():
-    N, Q = map(int, input().split())
-    A = []
-    tmp = 1
-    for i in range(N):
-        A.append((tmp << 32) + 1)
-        tmp = (tmp*10)%MOD
-    A = A[::-1]
-    lst = LazySegmentTree(N, op, e, mapping, composition, id)
-    lst.build(A)
 
-    res = []
+N, Q = map(int, input().split())
+P = 998244353
+n = 1<<32
 
-    for _ in range(Q):
-        l, r, d = map(int, input().split())
-        l -= 1
-        lst.range_apply(l, r, (d << 32))  # (b << 32) + c
-        res.append(lst.prod(0, lst.n) >> 32)
-
-    print('\n'.join(map(str, res)))
-
-
-if __name__ == '__main__':
-    main()
+rests = [1]
+for _ in range(N-1):
+    rests.append(rests[-1]*10%P)
+def op(a, b):
+    a0, a1 = a//n, a%n
+    b0, b1 = b//n, b%n
+    return (a0+b0)*n + ((a1*rests[b0]+b1)%P)
+e = 0
+inv9 = pow(9, P-2, P)
+def mapping(f, x):
+    x0, x1 = x//n, x%n
+    return x if f is None else x0*n + ((f*((rests[x0]-1)%P)*inv9)%P)
+def composition(f, g):
+    return f if f is not None else g
+id_ = None
+v = [1]
+for _ in range(N-1):
+    v.append(v[-1]*10%P)
+v = [n+1]*N
+lst = LazySegTree(op, e, mapping, composition, id_, v)
+for _ in range(Q):
+    l, r, d = map(int, input().split())
+    lst.apply(l-1, r, d)
+    print(lst.all_prod()%n)

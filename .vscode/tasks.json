@@ -16,31 +16,22 @@
       ]
     },
     {
-      "label": "stress_test",
+      "label": "test_input_txt",
       "group": {
         "kind": "test",
         "isDefault": true
       },
       "type": "shell",
+      "command": "${workspaceFolder}/test_input_txt.sh",
+      "args": [
+        "${fileBasenameNoExtension}"
+      ]
+    },
+    {
+      "label": "stress_test",
+      "group": "test",
+      "type": "shell",
       "command": "${workspaceFolder}/stress_test.sh",
-      "args": [
-        "${fileBasenameNoExtension}"
-      ]
-    },
-    {
-      "label": "stress_test_reset",
-      "group": "test",
-      "type": "shell",
-      "command": "${workspaceFolder}/stress_test_reset.sh",
-      "args": [
-        "${fileBasenameNoExtension}"
-      ]
-    },
-    {
-      "label": "stress_test_no_naive",
-      "group": "test",
-      "type": "shell",
-      "command": "${workspaceFolder}/stress_test_no_naive.sh",
       "args": [
         "${fileBasenameNoExtension}"
       ]

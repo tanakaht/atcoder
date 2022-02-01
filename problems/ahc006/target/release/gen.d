@@ -1,0 +1,1 @@
+/Users/ht/googledrive/projects/atcoder/problems/ahc006/target/release/gen: /Users/ht/googledrive/projects/atcoder/problems/ahc006/src/bin/gen.rs /Users/ht/googledrive/projects/atcoder/problems/ahc006/src/lib.rs

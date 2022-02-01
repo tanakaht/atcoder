@@ -1,30 +1,36 @@
-import math, itertools
+import math, sys
 
 N = int(input())
 XYP = [list(map(int, input().split())) for _ in range(N)]
-x_dists = [[math.inf]*N for _ in range(pow(2, N))]
-y_dists = [[math.inf]*N for _ in range(pow(2, N))]
 anss = [math.inf] * (N + 1)
-for bi in range(pow(3, N)):
-    k = 0
-    xb = 0
-    yb = 0
-    b = 1
-    ans = 0
+x_cost = [[abs(XYP[i][0])*XYP[i][2] for i in range(N)] for _ in range(1<<N)]
+y_cost = [[abs(XYP[i][1])*XYP[i][2] for i in range(N)] for _ in range(1<<N)]
+for bit in range(1<<N):
+    available = []
     for i in range(N):
-        flg = bi % 3
-        if flg == 1:
-            xb += b
-            k += 1
-        elif flg == 2:
-            yb += b
-            k += 1
-        bi //= 3
-        b *= 2
-    x_dist = x_dists[xb]
-    y_dist = y_dists[yb]
+        if bit>>i&1:
+            available.append(i)
     for i in range(N):
-        ans += min(x_dist[i], y_dist[i]) * XYP[i][2]
-    anss[k] = min(anss[k], ans)
+        x, y, p = XYP[i]
+        for j in available:
+            x_, y_, _ = XYP[j]
+            x_cost[bit][i] = min(x_cost[bit][i], abs(x-x_)*p)
+            y_cost[bit][i] = min(y_cost[bit][i], abs(y-y_)*p)
+
+for bit in range(1<<N):
+    line_cnt = bin(bit).count("1")
+    xbit = bit
+    while True:
+        ybit = bit ^ xbit
+        cost = 0
+        xc, yc = x_cost[xbit], y_cost[ybit]
+        for i in range(N):
+            cost += min(xc[i], yc[i])
+        anss[line_cnt] = min(anss[line_cnt], cost)
+        xbit -= 1
+        if xbit < 0:
+            break
+        xbit &= bit
+
 for ans in anss:
     print(ans)

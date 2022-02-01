@@ -1,0 +1,1 @@
+/Users/ht/googledrive/projects/atcoder/problems/ahc006/target/release/vis: /Users/ht/googledrive/projects/atcoder/problems/ahc006/src/bin/vis.rs /Users/ht/googledrive/projects/atcoder/problems/ahc006/src/lib.rs

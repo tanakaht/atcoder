@@ -1,0 +1,1 @@
+/Users/ht/googledrive/projects/atcoder/problems/future-contest-2022-qual/target/release/vis: /Users/ht/googledrive/projects/atcoder/problems/future-contest-2022-qual/src/bin/vis.rs /Users/ht/googledrive/projects/atcoder/problems/future-contest-2022-qual/src/lib.rs
