@@ -1,0 +1,1 @@
+/Users/ht/googledrive/projects/atcoder/contests/ahc008_marathon/tools/target/release/gen: /Users/ht/googledrive/projects/atcoder/contests/ahc008_marathon/tools/src/bin/gen.rs /Users/ht/googledrive/projects/atcoder/contests/ahc008_marathon/tools/src/lib.rs
