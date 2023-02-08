@@ -21,7 +21,7 @@ cmaes==0.8.2
 cmd2==2.2.0
 colorama==0.4.4
 colorlog==4.7.2
-cryptography==35.0.0
+cryptography==39.0.1
 cycler==0.10.0
 decorator==4.4.2
 defusedxml==0.6.0
